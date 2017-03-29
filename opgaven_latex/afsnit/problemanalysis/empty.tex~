@@ -1,0 +1,8 @@
+\section{Existing technologies}
+Vision control of robots has become quite effective and is widely used in modern production, especially in packaging operations. This is due to the increase in usability, since it used be complicated to setup the communication between the vision and the robot, and it required text-based programming. Today robot control boxes comes with existing support for visual input and the programming software is drag-and-drop based, which makes it easy for a company to program a robot for a given task. The purpose of this section is to specify the requirements and limitations   of a visual controller robot doing a pick and place operation.
+\subsection{ABB Delta Robot}
+
+
+\begin{figure}
+  \parbox{0.45\textwidth}{\includegraphics{}
+\end{figure}

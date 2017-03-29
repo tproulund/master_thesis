@@ -1,0 +1,38 @@
+\begin{tikzpicture}
+\node[anchor=south west,inner sep=0] (image) at (0,0) 
+{\includegraphics[width=0.6\textwidth]{kinematics_fig}};
+    \begin{scope}[x={(image.south east)},y={(image.north west)}]
+        %Rotation axis
+        \draw[blue,dashed, ultra thick] (0.73,-0.1) -- (0.73,0.7);
+        \draw[blue,dashed,ultra thick] (0.37,0.3) -- (0.37,0.7);
+        \draw[blue,dashed,ultra thick] (0.055,0.12) -- (0.055,0.7);
+        
+        % Local coordinates
+        
+        % q0
+        \draw[red,ultra thick, ->] (0.73,0) --node[right]{$\boldsymbol{z_0}$} (0.73,0.1);
+        \draw[red,ultra thick, ->] (0.73,0) --node[below]{$\boldsymbol{x_0}$} (0.63,0);
+        
+        % q1
+        \draw[red,ultra thick, ->] (0.37,0.5) --node[right]{$\boldsymbol{z_1}$} (0.37,0.6);
+        \draw[red,ultra thick, ->] (0.37,0.5) --node[below]{$\boldsymbol{x_1}$} (0.27,0.5);
+        
+        %q2
+        \draw[red,ultra thick, ->] (0.055,0.5) --node[right]{$\boldsymbol{z_2}$} +(0,0.1);
+        \draw[red,ultra thick, ->] (0.055,0.5) -- node[below]{$\boldsymbol{x_2}$}+(-0.1,0); 
+        
+        %q3
+        \draw[red,ultra thick, ->] (0.055,0.19) --node[right,thick]{$\boldsymbol{z_3}$} (0.055,0.29); 
+        \draw[red,ultra thick, ->] (0.055,0.19) --node[below]{$\boldsymbol{x_3}$} +(-0.1,0);
+        
+        %q4
+        \draw[red,ultra thick, ->] (0.055,0.13) --node[right,thick]{$\boldsymbol{z_4}$} +(0,-0.1);
+        \draw[red,ultra thick, ->] (0.055,0.13) --node[below]{$\boldsymbol{x_4}$} +(-0.1,0);
+        
+        % measurements
+        \draw [green, ultra thick,|-|] (0.73,0.35) --node[below]{$\boldsymbol{a_1}$} (0.37,0.35);
+        \draw [green, ultra thick,|-|] (0.37,0.35) --node[below]{$\boldsymbol{a_2}$} (0.055,0.35);
+        \draw [green, ultra thick,|-|] (0.83,0) --node[right]{$\boldsymbol{d_1}$} (0.83,0.5);
+        \draw [green, ultra thick,|-|] (-0.15,0.5) --node[left]{$\boldsymbol{q_3}$} (-0.15,0.19);
+    \end{scope}
+\end{tikzpicture}

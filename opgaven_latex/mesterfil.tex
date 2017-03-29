@@ -1,0 +1,103 @@
+\input{preamble}
+
+\graphicspath{
+{./billeder/},
+{./billeder/problem_analysis/},
+{./billeder/modeling/},
+}
+
+
+
+
+\newcommand{\ind}{./afsnit/introduction/}
+\newcommand{\g}{\,}
+\newcommand{\T}[2]{{^{#1} A_{#2}}}
+\begin{document}
+\input{./afsnit/laesevejledning}
+\pagenumbering{roman}
+\setcounter{page}{1}
+%\includegraphics[width=\textwidth]{./forside/Forside}
+\input{./forside/front_page}
+\clearpage
+\restoregeometry
+\thispagestyle{empty}
+\newpage
+\mbox{}
+\clearpage
+
+\input{./titelblad+synopsis/titelblad} \clearpage
+
+\clearpage
+\input{./afsnit/forord}
+
+\clearpage
+ \setcounter{tocdepth}{1}
+ \tableofcontents 
+\clearpage
+
+% %%Nomenclature
+% \input{./nomenclature/nomenclature}\clearpage
+% 
+
+
+
+\thispagestyle{empty}
+\newpage
+\mbox{}
+\clearpage
+%\thispagestyle{empty}
+%\newpage
+%\mbox{}
+%\clearpage
+
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%% Introduction
+\renewcommand\ind{./afsnit/introduction/}
+\input{\ind introduction}
+
+%% Problem analysis 
+\renewcommand\ind{./afsnit/problemanalysis/}
+\input{\ind prob_ana_intro}\clearpage
+  %section: test setup
+  \input{\ind prob_ana_test_setup}\clearpage
+  %section: solution strategy
+  \input{\ind prob_ana_solution_strategy}\clearpage
+
+\renewcommand\ind{./afsnit/problem_statement/}
+\input{\ind prob_statement}
+
+\renewcommand\ind{./afsnit/vision_system/}
+\input{\ind vision_system}
+
+\renewcommand\ind{./afsnit/modeling/}
+\input{\ind modeling}\clearpage
+\input{\ind kinematics}
+
+\renewcommand\ind{./afsnit/solution_iterations/}
+\input{\ind solution_iteration}
+
+%% TO DO REMEMBER TO COMMENT WHEN DONE
+\clearpage
+\listoftodos
+\clearpage
+
+\bibliography{kilder}
+\addcontentsline{toc}{chapter}{bibliography}
+
+\appendix
+\renewcommand\appendixname{Annex}
+\renewcommand\ind{./annex/}
+\begin{appendices}
+\input{\ind david_hartenberg}
+\end{appendices}
+
+\renewcommand\appendixname{Appendix}
+\renewcommand\ind{./appendix/}
+\begin{appendices}\setcounter{chapter}{0}
+
+\end{appendices}
+
+\end{document}

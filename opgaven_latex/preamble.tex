@@ -1,0 +1,109 @@
+\documentclass[12pct,twoside, openright]{report}
+%\usepackage[hmarginratio=1:1,top=3cm,bottom=3cm]{geometry}
+\usepackage[a4paper,inner=3.5cm,outer=2.5cm,top=3.5cm,bottom=4.5cm,pdftex]{geometry}
+\usepackage{minitoc}
+\usepackage{listings}  
+\usepackage{emptypage}
+\usepackage{makeidx}
+\usepackage{etoolbox,ragged2e,siunitx}
+\usepackage{pdfpages}
+\usepackage{capt-of}
+\usepackage{todonotes}
+
+
+\usepackage[utf8]{inputenc}
+
+
+%\usepackage[ansinew]{inputenc}										% Gør det muligt at bruge æ, ø og å i sine .tex-filer
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath , amsfonts , amssymb}
+ \numberwithin{equation}{section}
+%\usepackage[hmargin=3cm,vmargin=3.5cm]{geometry}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage[hang,bf]{caption}
+%\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{subcaption}
+\usepackage[authoryear]{natbib} 
+%\usepackage[numbers]{natbib} 
+\bibliographystyle{apalike}
+%\bibliographystyle{abbrvnat} 
+%\usepackage{lipsum}\usepackage{blindtext}
+\usepackage{wrapfig}
+\usepackage[absolute]{textpos}
+\usepackage{graphicx}
+%\usepackage{pgfplotstable}
+\usepackage{pgfplots}
+\usepackage{xcolor,colortbl}
+%\usepackage{gnuplot-lua-tikz}
+\usepackage{lipsum}
+\usepackage{color}
+\usepackage{lastpage}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage[bookmarks=true , bookmarksopen=true,bookmarksnumbered=true,pagebackref=true,colorlinks=blue,breaklinks=true]{hyperref}
+\usepackage{array}
+\usepackage{rotating}
+\usepackage[titletoc]{appendix}
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.markings, plotmarks,shapes}
+%\usetikzlibrary{arrows.meta}
+\usetikzlibrary{intersections}
+\usepackage{tkz-euclide}
+\usetkzobj{all}
+
+\usepackage[europeanresistors,americaninductors]{circuitikz}
+\usepackage[Lenny]{fncychap}
+
+
+
+
+\ChNameVar{\fontsize{14}{16}\usefont{OT1}{phv}{m}{n}\selectfont}
+\ChNumVar{\fontsize{60}{62}\usefont{OT1}{ptm}{m}{n}\selectfont}
+\ChTitleVar{\centering\Huge\bfseries\rm}
+\ChRuleWidth{1pt}
+
+\fancypagestyle{plain}{%
+  \renewcommand{\headrulewidth}{0pt}%
+ \fancyhf{}%
+  \fancyfoot[OR]{\thepage\ af \pageref{LastPage}}
+  \fancyfoot[EL]{\thepage\ af \pageref{LastPage}}%
+}
+%\fancypagestyle{fancy}{%
+%  \renewcommand{\headrulewidth}{0pt}%
+% \fancyhf{}%<path to your tex file>\yourtexfile.nlo -s nomencl.ist -o <path to your tex file>\yourtexfile.nls
+%  \fancyfoot[OR]{\footnotesize Side \thepage\ af \pageref{LastPage}}
+%  \fancyfoot[EL]{\footnotesize Side \thepage\ af \pageref{LastPage}}%
+%}
+\pagestyle{fancy}
+
+\lhead{4.119f}
+\chead{\leftmark}
+\rhead{\today}
+\cfoot{}
+\fancyfoot[OR]{\thepage\ af \pageref{LastPage}}
+\fancyfoot[EL]{\thepage\ af \pageref{LastPage}}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\newcommand*{\tomlinje}[0]{\\[\baselineskip]
+   \setlength{\parskip}{0pt}}
+\newcommand{\mat}[1]{\left[\begin{matrix}
+#1
+\end{matrix}	\right]}
+\newcommand{\vect}[1]{\left\{\begin{matrix}
+#1
+\end{matrix}    \right\}}
+\newcommand{\kapitel}{./Kapitler/Kapitel_2_produktanalyse/}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\addto\captionsdanish{
+\renewcommand\appendixname{Appendiks}
+\renewcommand\contentsname{Indholdsfortegnelse}}
+\definecolor{green}{rgb}{.55,0.75,0}
+
+
+\usepackage[firstpage]{draftwatermark}
+%\SetWatermarkLightness{2}
+%\SetWatermarkText{\includegraphics[height=\textheight , width=\textwidth , angle = -45]{./billeder/aau_waves_3}}

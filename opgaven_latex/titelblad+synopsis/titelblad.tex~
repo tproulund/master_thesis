@@ -1,0 +1,83 @@
+%\input{preamble}
+%\begin{document}
+
+
+\enlargethispage{20em}
+
+
+\begin{titlepage}
+\setcounter{page}{1}
+\thispagestyle{plain}
+\begin{samepage}
+{\samepage 
+\begin{tabular}{r}
+\parbox{\textwidth}{  \raisebox{9mm}{\includegraphics{./forside/84800_aau_uk_studentreport_blue_cmyk}}
+\hfill \parbox{6.7cm}{\begin{tabular}{l}
+{\sf\small \textbf{http://www.m-tech.aau.dk/}} \\
+{\sf\small  \textbf{Electro-Mechanical System Design}} \\
+{\sf\small Fibigerstræde 16} \\
+{\sf\small Telefon 99 40 71 17} \\
+{\sf\small Fax 99 40 71 10} \\
+{\sf\small http://info@m-tech.aau.dk}
+\end{tabular}}}
+\\
+\end{tabular}
+
+\begin{tabular}{cc}
+\parbox{7cm}{
+\begin{description}
+
+\item {\bf Title:} 
+
+One wheeled skateboard
+  
+\item {\bf Theme:} 
+
+Electrical and fluid power servomechanisms
+
+\end{description}
+
+\parbox{8cm}{
+
+\begin{description}
+\item {\bf Project period:}\\
+   P7, EMSD1\\
+  \hspace{4cm}
+\item {\bf Project group:}\\
+  2.209A\\
+  \hspace{4cm}
+\item {\bf Authors:}\\
+
+Klaus Bro Jensen \\[0.5em]
+Max Møller Madsen \\[0.5em]
+Chris Skaarup Ahle \\[0.5em]
+Thomas Pank Roulund \\[0.5em]
+\item {\bf  Supervisors:}\\
+ Christian Nørgaard  \\[0.5em]
+ 
+  \end{description}
+}
+\begin{description}
+\item {\bf Printed copies: x} 
+\item {\bf Pages: x} 
+\item {\bf x annex and x appendix} 
+\item {\bf Completed: 18.12.2015} 
+\end{description}
+\vfill } &
+\parbox{7cm}{
+  \vspace{.15cm}
+  \hfill 
+  \begin{tabular}{l}
+  {\bf Synopsis:}\bigskip \\
+  \fbox{
+    \parbox{6.5cm}{\bigskip
+     {\vfill{\small \input{./titelblad+synopsis/synopsis}
+     \bigskip}}
+     }}
+   \end{tabular}}
+\end{tabular}}
+\\ \\
+
+\end{samepage}
+\end{titlepage}
+%\end{document}

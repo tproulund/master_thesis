@@ -1,0 +1,5 @@
+\chapter{Problem Statement}
+With all the necessary steps to modify the test setup and necessary challenges to solve, it is possible to specify a problem statement which the remainder of this report works towards solving
+\begin{center}
+  \textit{Is it possible with the modules defined in section \ref{sub_lean_startup} to use the Lean startup method to solve the goal of using visual control of the Cobra s600 to assemble the demo assembly?}
+\end{center}

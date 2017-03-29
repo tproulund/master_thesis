@@ -1,0 +1,39 @@
+\section{Kinematics}\label{sec_kinematics}
+Following the standard David-Hartenberg convention for assignment of local coordinate systems, it is possible to derive the David-Hartenberg parameters. The local coordinate systems are shown on figure \ref{fig_cobra_dh}.
+\begin{figure}[htbp]
+\centering
+\input{billeder/modeling/kinematics_fig}
+\caption{The Cobra s600 with local coordinate systems.}
+\label{fig_cobra_dh}
+\end{figure}
+From the figure it is possible to setup the DH-table, which is shown in table \ref{tab_dh}
+\begin{table}[htbp!]
+\centering
+  \begin{tabular}{c|c|c|c|c}
+  $i$ & $\alpha_i$ & $a_i$ & $d_i$ & $\theta_i$ \\\hline
+  1 & 0 & $a_1$ & $d_1$ & $q_1$ \\\hline
+  2 & 0 & $a_2$ & 0 & $q_2$ \\\hline
+  3 & 0 & 0 & $q_3$ & 0 \\\hline
+  4 & $\pi$ & 0 & $d_4$ & $q_4$ \\
+    
+  \end{tabular}
+  \caption{The David-Hartenberg parameters for the Cobra s600}
+  \label{tab_dh}
+\end{table}\newline
+The general DH-matrix is as follows when using compact notation:
+\begin{equation}
+  ^{i-1}A_i (q_i)=\mat{
+  c\theta_i & -c\alpha_i\g s\theta_i & s\alpha_i\g s\theta_i & a_i\g c\theta_i \\
+  s\theta_i & c\alpha_i\g c\theta_i & -s\alpha_i \g c\theta_i & a_i\g s\theta_i \\
+  0 & s\alpha_i & c\alpha_i & d_i\\
+  0 & 0 & 0 & 1}
+\end{equation}
+To derive the transformation matrix from the tool tip to the Cartesian space, it is necessary to multiply the four transformation matrices. This is done in appendix \ref{app_dh}. The final transformation matrix is:
+\begin{equation}
+  \T{0}{4}=
+  \mat{c_{124} & s_{124}    & 0   & a_1\g c_1+a_2\g c_{12}\\
+       s_{124} & -c_{124}   & 0   & a_1\g s_1+a_2\g s_{12}\\
+       0       &   0        & -1  & d_1+q_3+d_4\\
+       0       &   0        & 0   & 1}\label{eq_t4}
+\end{equation}
+

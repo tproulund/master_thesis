@@ -1,0 +1,61 @@
+\chapter{Diviation of transformation matrix}\label{app_dh}
+From section \ref{sec_kinematics} the DH table is defined as 
+\begin{table}[htbp!]
+\centering
+  \begin{tabular}{c|c|c|c|c}
+  $i$ & $\alpha_i$ & $a_i$ & $d_i$ & $\theta_i$ \\\hline
+  1 & 0 & $a_1$ & $d_1$ & $q_1$ \\\hline
+  2 & 0 & $a_2$ & 0 & $q_2$ \\\hline
+  3 & 0 & 0 & $q_3$ & 0 \\\hline
+  4 & $\pi$ & 0 & $d_4$ & $q_4$ \\
+    
+  \end{tabular}
+  \caption{The David-Hartenberg parameters for the Cobra s600}
+  \label{tab_app_dh}
+\end{table}
+And the general DH matrix is:
+\begin{equation}
+  ^{i-1}A_i (q_i)=\mat{
+  c\theta_i & -c\alpha_i\g s\theta_i & s\alpha_i\g s\theta_i & a_i\g c\theta_i \\
+  s\theta_i & c\alpha_i\g c\theta_i & -s\alpha_i \g c\theta_i & a_i\g s\theta_i \\
+  0 & s\alpha_i & c\alpha_i & d_i\\
+  0 & 0 & 0 & 1}
+\end{equation}
+To derive the transformation matrix from the base of the robot to tool tip, it is necessary to substitute into the general DH matrix which yields four transformation matrices. The matrices are written in super compact form, which means $c_1=\cos(q_1)$ and $s_{12}=\sin(q_1+q_2)$:
+\begin{align}
+  \T{0}{1}&=\mat{c_1 & -s_1 & 0 & a_1\g c_1\\
+                s_1  & c_1  & 0  & a_1\g s_1\\
+                0    & 0    & 1  & d_1\\
+                0    & 0    & 0  & 1}\\
+  \T{1}{2}&=\mat{c_2 & -s_2 & 0 & a_2\g c_2\\
+                 s_2 & c_2  & 0 & a_2\g s_2\\
+                 0   &  0   & 1 & 0\\
+                 0   &  0   & 0 & 1}\\
+  \T{2}{3}&=\mat{1 & 0 & 0 & 0\\
+                 0 & 1 & 0 & 0\\
+                 0 & 0 & 1 & q_3\\
+                 0 & 0 & 0 & 1}\\
+  \T{3}{4}&=\mat{c_4 & s_4 & 0   & 0\\
+                 s_4 & -c_2 & 0  & 0\\
+                 0   & 0    & -1 & d_4\\
+                 0   & 0    & 0  & 1}      
+\end{align}
+These transformation matrices is now multiplied to derive the desired matrix.
+\begin{align}
+  \T{0}{2}&=\T{0}{1}\g\T{1}{2}=
+  \mat{c_{12} & -s_{12} & 0 & a_1\g c_1+a_2\g c_{12}\\
+       s_{12} & c_{12}  & 0 & a_1\g s_1+a_2\g s_{12}\\
+       0      &   0     & 1 & d_1\\
+       0      &   0     & 0 & 1}\\
+  \T{0}{3}&= \T{0}{2}\g\T{2}{3}=
+  \mat{c_{12} & -s_{12} & 0 & a_1\g c_1+a_2\g c_{12}\\
+       s_{12} & c_{12}  & 0 & a_1\g s_1+a_2\g s_{12}\\
+       0      &   0     & 1 & d_1+q_3\\
+       0      &   0     & 0 & 1}\\
+  \T{0}{4}&= \T{0}{3}\g \T{3}{4}=
+  \mat{c_{124} & s_{124}    & 0   & a_1\g c_1+a_2\g c_{12}\\
+       s_{124} & -c_{124}   & 0   & a_1\g s_1+a_2\g s_{12}\\
+       0       &   0        & -1  & d_1+q_3+d_4\\
+       0       &   0        & 0   & 1} \label{eq_app_t4}
+\end{align}
+Equation \eqref{eq_app_t4} is the transformation matrix from the base to the tool tip.

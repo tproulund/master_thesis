@@ -1,0 +1,99 @@
+\begin{titlepage}
+
+\newgeometry{left=1cm, right = 1cm, bottom = 1cm, top = 1cm }
+\enlargethispage{10\baselineskip}
+%\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}[t]{\textwidth}
+%\vspace{0cm}
+\begin{flushright}
+  
+\includegraphics[scale=1]{./forside/84800_aau_uk_studentreport_blue_cmyk}
+\end{flushright}
+
+\end{minipage}\\[1cm]
+%\textsc{\LARGE Aalborg University}\\[1.5cm] % Name of your university/college
+\HRule \\[0.4cm]
+{ \huge \bfseries Visual Control of SCARA Adept Robot}\\[0.2cm] % Title of your document
+\HRule \\[.4cm]
+%\textsc{\Large Major Heading}\\[0.5cm] % Major heading such as course name
+%\textsc{\large Minor Heading}\\[0.5cm] % Minor heading such as course title
+
+\includegraphics[width=0.6\textwidth]{./forside/fronpage_test}
+\\[0.4cm]
+\HRule \\[0.4cm]
+{ \bfseries Master Thesis }\\[0.2cm] % Title of your document
+\HRule \\[.4cm]
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\vspace{1cm}
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+
+
+\begin{center}
+
+
+\begin{tabular}{l p{5cm} l}
+
+
+   
+    \large \colorbox{white!30}{\emph{Authors:}} && \large \colorbox{white!30}{\emph{Supervisor:}}\\[0.1cm]
+   \large \colorbox{white!30}{Thomas Pank \textsc{Roulund}} && \large  \colorbox{white!30}{Ole \textsc{Madsen}} \\
+     && \large  \colorbox{white!30}{Rasmus Skovgaard \textsc{Andersen}} \\
+  
+    
+   
+\end{tabular}
+\end{center}
+%\begin{minipage}{\textwidth}
+%\begin{flushleft}\emph{Authors:}\end{flushleft}\begin{flushright}\emph{Supervisor:}\end{flushright}
+%Klaus Bro \textsc{Jensen} \\
+%Max Møller \textsc{Madsen}\\
+%Chris Skaarup \textsc{Ahle}\\
+%Thomas Pank \textsc{Roulund}
+%
+%\end{minipage}
+%~
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushright} \large
+%\emph{Supervisor:} \\[0.1cm]
+%Christian \textsc{Nørgaard}\\
+%%Mikkel Melters \textsc{Pedersen} % Supervisor's Name
+%\end{flushright}
+%\end{minipage}\\[1cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+%\Large \emph{Author:}\\
+%John \textsc{Smith}\\[3cm] % Your name
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+%{\large \today} % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}

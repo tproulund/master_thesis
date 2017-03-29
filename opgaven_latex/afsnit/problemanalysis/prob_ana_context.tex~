@@ -1,0 +1,2 @@
+\section{Assembly operation}
+Since this report's wish is to perform an assembly opperation without information about the conveyor belt's velocity and this velocity is allowed to change, the ABB's visual solution is not applicable for this task. This is because the solution requires known and constant conveyor speed or else the position prediction of objects on the conveyor belt is not correct, which in turn would result in the Delta robot missing the objects when it is performing a pick operation.

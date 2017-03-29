@@ -1,0 +1,62 @@
+\section{Solution strategy}
+When solving a complex problem as this problem of developing a vision system for a robot, it is possible to dedicate time and resources to a solution approach that turns out not to achieve the desired result. It is therefore important to come up with a solution strategy which ensures the available time and resources are not wasted. The purpose of this section is to present the solution strategy for this report.
+
+\subsection{Lean startup method}\label{sub_lean_startup}
+Solving the task of locating the housing on the conveyor belt and placing a lid on it, is complicated because there are several sub-problems which also needs to be solved to achieve the final goal. To ensure all these sub-problems are solved in an efficient way, one approach is to use the methodology called the lean startup method, and the idea is to follow the loop shown on figure \ref{fig_lean_startup}
+\begin{figure}[htbp!]
+\centering
+\begin{tikzpicture}[>=stealth',shorten >=1pt,auto]
+\tikzstyle{circ} = [draw, fill=blue!40, circle, node distance = 2cm,minimum size=4em]
+\tikzstyle{input} = [coordinate]
+%\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+\node[circ] (build) {Build};
+\node[circ,left of=build,node distance = 4cm](learn) {Learn};
+\node[input,left of=build,node distance = 2cm](guide) {};
+\node[circ,below of = guide,node distance = 4cm](meas){Measure};
+
+\draw[->] (build) edge[bend left = 40] (meas);
+\draw[->] (meas) edge[bend left = 40] (learn);
+\draw[->] (learn) edge[bend left = 40] (build);
+\end{tikzpicture}
+  \caption{Lean startup ideology}
+\label{fig_lean_startup}
+\end{figure}\newline
+With the context of this report, the approach is to spilt the problem into modules and then define a simple task for the modules, solve it and learn from the procedure. At each iteration the complexity of the modules' tasks are increase until the original goal is solved. The modules for this report are:
+\begin{enumerate}
+  \item The modifications for the test setup; type of and number of cameras and lighting inside the cage \label{item_test}
+  \item Assembling of the assembly; number of parts used and color of the parts  \label{item_assem}
+  \item Conveyor belt; the maximum velocity of the conveyor belt and what kind of changes can happen to the velocity \label{item_conve}
+  \item Visual system; detecting the parts on the conveyor belt and deriving position, orientation and velocity \label{item_vis}
+  \item Control strategy and trajectory tracking for the robot; with the information from the visual system, it is necessary to plan a trajectory for the robot and control strategy to ensure the robot is tracking the trajectory \label{item_control}
+  \item Communication between visual system and the robot control unit; how the control strategy output is translated into signals for the robot, while still ensuring the system bandwidth is sufficient \label{item_com}
+   
+\end{enumerate}
+Module \ref{item_test} to \ref{item_conve} are physical modules, where module \ref{item_conve} is defined to challenge the solution for each iteration. The modules \ref{item_vis} to \ref{item_com} are software modules and should only depend on some specific inputs and give specific outputs such that it is possible to change them if the need arises. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
