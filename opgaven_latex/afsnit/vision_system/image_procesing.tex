@@ -9,7 +9,12 @@ A single frame from the camera in the test setup is shown on figure \ref{fig_cle
 \node[anchor=south west,inner sep=0] (image) at (0,0) 
 {\includegraphics[width=0.6\textwidth]{clean_pic}};
 		\begin{scope}[x={(image.south east)},y={(image.north west)}]
-	   		\draw[very thick,red] (0.095,0.375) --(0.095,0.657) --node[above,red]{Region of interest} (0.79,0.665)  -- (0.79,0.382) -- (0.095,0.375);
+	   		\draw[very thick,red]
+	   		 (0.001,0.315) --
+	   		(0.001 ,0.657) --node[above,red]{Region of interest} 
+	   		(0.85,0.665)  -- 
+	   		(0.85,0.32) --
+	   		 (0.001,0.315);
 	    \end{scope}
 	\end{tikzpicture}
 	
@@ -189,15 +194,19 @@ The equivalent ellipse is added to the frame from the camera on figure \ref{fig_
 	\caption{The frame from the camera with the bounding box, centroid and equivalent ellipse plotted}
 	\label{fig_ellipse}
 \end{figure}\\
-There is two considerations with the approach used for determination of position and orientation: firstly, for the equivalent ellipse to exist, the object needs to be rectangular, which is always the case for the housing.Secondly, the orientation is not to a specific  point on the housing, since it is simplified to a blob, this means that say the housing is rotated $180^o$ on figure \ref{fig_ellipse}, the orientation will remain the same \todo{Er dette rigtigt?}.  
-\begin{figure}
-
-\begin{tikzpicture}
+There is two considerations with the approach used for determination of position and orientation: firstly, for the equivalent ellipse to exist, the object needs to be rectangular, which is always the case for the housing. Secondly, the orientation is not to a specific  point on the housing, since it is simplified to a blob, this means that say the housing is rotated $180^o$ on figure \ref{fig_ellipse}, the orientation will remain the same \todo{Er dette rigtigt?}. For this application the housing is always rectangular so the first the equivalent ellipse always exist, but since the lid needs to be correctly aligned it might cause problems later one, that the derived orientation is not to a specific part of the housing.
+\subsection{Tracking} 
+With the method for finding the centroid and orientation of the housing in a single frame done, it is necessary to test if this also works in a video. The reason for this is, that the background conditions are highly dynamic due to changes in lighting. These changes comes both from the artificial lighting in the work shop where the test setup is located, and from the windows in the roof. Therefore several videos under different weather conditions and on different times on the day, to verify the robustness of the vision system. The test performed, is that the conveyor belt is set to a constant velocity and the housing is placed on the belt in a arbitrary orientation. The plots shown on figure \ref{fig_vid_pos} are the calculated centroid throughout the video.\clearpage
+\begin{figure}[htbp!]
+\centering
+\begin{tikzpicture}[spy using outlines=
+{circle, magnification=8, connect spies, size=7cm}]
 \begin{axis}[
     width=0.8\textwidth,
-height=0.6\textwidth,
+height=0.5\textwidth,
 xlabel=Frame number,
 ylabel=Pixel number,
+ytick = {0,100,...,800},
     grid=both,
 grid style={line width=.1pt, draw=gray!20},
 ]
@@ -214,8 +223,77 @@ mark size=0.6pt,
 color=red,
 ] table [y index=1]{./billeder/vision/pos.dat};
 \addlegendentry{$v$ direction}
-%\addplot table [y=P, x=$Q_D$]{data.dat};
-%\addlegendentry{$Q_D$ series}
+
+\coordinate (spypoint) at (axis cs:100,100);
+\coordinate (magnifyglass) at (axis cs:100,400);
 \end{axis}
+\spy [blue, size=3.5cm] on (spypoint)
+in node[fill=white] at (magnifyglass);
 \end{tikzpicture}
+\caption{The position of the centroid in the $(u,v)$ space throughout the video}
+\label{fig_vid_pos}
 \end{figure}
+\noindent As expected the centroid is moving along the horizontal direction, $u$. The small change in the vertical direction, $v$, is due to the camera's orientation is not perfectly aligned with the conveyor belt.  The plot shown on figure \ref{fig_vid_ori} is the detected orientation of the housing.
+\begin{figure}[htpb!]
+	\centering
+	\begin{tikzpicture}
+	\begin{axis}[
+	width=0.8\textwidth,
+	height=0.5\textwidth,
+	xlabel=Frame number,
+	ylabel=Degree,
+	grid=both,
+	grid style={line width=.1pt, draw=gray!20},
+	]
+	\addplot [
+	only marks,
+	mark size=0.6pt,
+	draw=blue,
+	] table [x index = 0,y index=1]{./billeder/vision/ori.dat};
+	\addlegendentry{$\theta$}
+
+	\end{axis}
+	\end{tikzpicture}
+	\caption{The orientation of the housing throughout the video}
+	\label{fig_vid_ori}
+\end{figure}\\
+There is more noise on the orientation than position, especially in the beginning and ending, where the vision system is only able to detect part of the housing. It therefore stands to reason, that maybe the vision system should only calculate the position and orientation once the housing is fully inside the camera's view. Furthermore, the orientation of the housing does not change during the video, so it is necessary to filter the signal to remove the noise on the orientation. The last state determine is the velocity of the housing, this is done using the backward Eulor method
+\begin{align}
+\dot u_k &= \frac{u_k-u_{k-1}}{\Delta t} = (u_k-u_{k-1})\g f_c\\
+\dot v_k &= \frac{v_k-v_{k-1}}{\Delta t} = (v_k-v_{k-1})\g f_c
+\end{align}
+Numeric differentiation as this, always introduces increased noise, which is also evident on the graphs on figure \ref{fig_vid_vec}, where the velocities for the entire video is shown.
+\begin{figure}[htbp!]
+	\centering
+		\begin{tikzpicture}
+	\begin{axis}[
+		width=0.8\textwidth,
+		height=0.5\textwidth,
+		xlabel=Frame number,
+		ylabel=$\frac{Pixel}{s}$,
+	%	ytick = {0,100,...,800},
+		grid=both,
+		grid style={line width=.1pt, draw=gray!20},
+		]
+		\addplot [
+		only marks,
+		mark size=0.6pt,
+		draw=blue,
+		] table [x index = 0,y index=1]{./billeder/vision/vec.dat};
+		\addlegendentry{$\dot u$}
+		\addplot 
+		[ 
+		only marks,
+		mark size=0.6pt,
+		color=red,
+		] table [x index = 0, y index=2]{./billeder/vision/vec.dat};
+		\addlegendentry{$\dot v$}
+		
+
+	\end{axis}
+
+\end{tikzpicture}
+\caption{The calculated velocities in the horizontal- and vertical direction}
+\label{fig_vid_vec}
+\end{figure}\\
+As before, the velocity calculation is affected when the housing enters and leaves the camera's field of view. Even though the velocities are noise, it is still possible to say, that the velocity in the $u$-direction is oscillating around $43 \frac{pixel}{s}$ and around $0 \frac{pixel}{s}$ in the $v$-direction. This is also to be expected since, as mentioned, the conveyor is set to a constant velocity. 

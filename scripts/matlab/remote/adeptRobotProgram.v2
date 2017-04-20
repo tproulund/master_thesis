@@ -1,0 +1,296 @@
+.PROGRAM error.trap()
+	error = 1
+	ATTACH ()
+;        CLEAR.EVENT
+	RETURNE
+
+ ;       EXECUTE 0 autocalibration(), -1, 314
+.END
+
+.PROGRAM tcpip()
+;-------------------------------------------------------------------------
+; Remote control
+; This server program is used for recieving alter command instructions from a Matlab client application
+; Start up the server program in task 0 from AdeptDesktop and run the Matlab client application 
+; to send Alter command instructions
+; The Ip address of the Smartcontroller in the workshop is "10.10.77.165" and 
+; local server port number is set to 1234
+; 
+;-------------------------------------------------------------------------
+
+	AUTO do_wait, handle, lun, no_wait, repeat_loop, status
+	AUTO $in.str, $out.str, $go.str, $coords.str, $crap.str
+
+
+	SET #start = #PPOINT(-11,100,50,-1)
+
+	;TYPE "Adept script started"
+	;TYPE "--------------------"
+
+   100	
+; Initialize constants.
+	no_wait = 1
+	do_wait = 0
+	lun = 7
+	first_time_conn = TRUE
+
+;Physical parameter control
+	ACCEL 10, 10
+	SPEED 40
+	SPEED 40 MONITOR
+
+
+;Error handling
+
+	REACTE error.trap
+
+;define out.str value
+	$out.str = "Server Ready"
+	$go.str = "GoGo"
+
+; attach robot to task no input args mean default which is robot nr 1
+	ATTACH ()
+
+; Attach the TCP device (mode=4 means allocate next available LUN).
+	ATTACH (lun, 4) "TCP"
+	FSET (lun) "/NODE 'server' /ADDRESS 172 16 141 110"
+	status = IOSTAT(lun) ;Check status of ATTACH
+	IF status < 0 THEN
+	    TYPE "Error from ATTACH:", $ERROR(status)
+	    GOTO 100
+	END
+
+; Set up a socket with local port #1234, to accept 5 client
+; connections, with a buffer size of 1024 bytes.
+	FOPEN (lun, 16) "/LOCAL_PORT 1234 /CLIENTS 5 /BUFFER_SIZE 20480"
+	status = IOSTAT(lun) ;Check status of ATTACH
+	IF status < 0 THEN
+	    TYPE "Error from FOPEN:", $ERROR(status)
+	    GOTO 100
+	END
+
+;Control loop starts
+	repeat_loop = TRUE
+	WHILE repeat_loop DO
+	    WAIT
+
+
+	    READ (lun, handle, do_wait) $coords.str
+;                TYPE "coord.str ", $coords.str
+
+	    i = 0     ;Set array index
+	    DO
+		$temp = $DECODE($coords.str,",",0)	   ;Pick off a number string
+		value[i] = VAL($temp)	       ; , parse to real value in array index nr i
+		$temp = $DECODE($coords.str,",",1)	   ;Discard spaces and commas 
+		i = i+1			      ;Advance the array index
+	    UNTIL i == 9
+
+
+	    my_value = value[0]
+	    my_x = value[1]
+	    my_y = value[2]
+	    my_z = value[3]
+	    my_wx = value[4]
+	    my_wy = value[5]
+	    my_wz = value[6]
+	    my_approach = value[7]
+	    my_depart = value[8]
+
+
+	    TYPE "Tag::", my_value
+	    TYPE "x/J1", my_x
+	    TYPE "y/J2", my_y
+	    TYPE "z/J3", my_z
+	    TYPE "yaw/J4", my_wx
+	    TYPE "pitch/J5", my_wy
+	    TYPE "Roll/J6", my_wz
+	    TYPE "Approach", my_approach
+	    TYPE "Depart", my_depart
+
+;                SET vbai_loc = TRANS(my_x,my_y,my_z,my_wx,my_wy,my_wz)
+
+; ---------------------------------------
+;Using if-else-loop to verify that the string is either world-coordinates or joint-angle.
+
+	    CASE my_value OF
+
+	      VALUE 10:
+		TYPE "Connection is active"
+		HERE curr_robot_pos
+		DECOMPOSE currentpos[] = curr_robot_pos
+		WRITE (lun, handle) "world", currentpos[0], currentpos[1], currentpos[2], currentpos[3], currentpos[4], currentpos[5]
+
+		BREAK
+
+
+	      VALUE 11:
+		TYPE "Connection is active"
+		HERE #curr_robot_pos
+		DECOMPOSE currentpos[] = #curr_robot_pos
+		WRITE (lun, handle) "joint", currentpos[0], currentpos[1], currentpos[2], currentpos[3], currentpos[4], currentpos[5]
+
+		BREAK
+
+
+	      VALUE 100:     ; Move to cartesian point
+		SET goal_pos = TRANS(my_x,my_y,my_z,my_wx,my_wy,my_wz)
+
+; Error trapping
+		REACTE error.trap
+
+		MOVE goal_pos
+		BREAK
+
+
+	      VALUE 200:     ; Move to joint configuration
+		SET #gui_move_loc = #PPOINT(my_x,my_y,my_z,my_wx,my_wy,my_wz)
+
+		REACTE error.trap
+
+		MOVE #gui_move_loc
+		BREAK
+
+
+	      VALUE 300:     ; close gripper
+
+		REACTE error.trap
+
+		SIGNAL -3001
+
+		BREAK
+
+	      VALUE 301:     ;open gripper
+
+		REACTE error.trap
+
+		SIGNAL 3001
+
+		BREAK
+
+	      ANY
+
+
+	    END
+
+	    IF error == 0 THEN
+		READ (lun, handle, no_wait) $crap.str
+		WRITE (lun, handle) "2164"
+		TYPE "Sent 2164 to VBAI"
+	    ELSE
+		READ (lun, handle, no_wait) $crap.str
+		WRITE (lun, handle) "9999"
+		TYPE "::error"
+	    END
+	    error = 0
+
+
+	END
+
+	RETURN
+
+.END
+
+.PROGRAM vgis1()
+	SPEED 50
+	SPEED 50 MONITOR
+	ACCEL 30, 30
+
+
+	WHILE TRUE DO
+
+	    MOVE TRANS(319,238.211,254.936,0,180,3.028)
+	    WHILE STATE(10) < 95 DO
+		WAIT
+
+	    END
+
+
+	    MOVE TRANS(319,238.211,204.936,0,180,3.028)
+	    WHILE STATE(10) < 95 DO
+		WAIT
+
+	    END
+	    SIGNAL 3001
+
+
+
+	    DEPART 50
+
+
+	    MOVE TRANS(447.5,-141.976,261.437,0,180,83.021)
+	    WHILE STATE(10) < 95 DO
+		WAIT
+
+	    END
+
+	    MOVE TRANS(447.5,-141.976,211.437,0,180,83.021)
+	    WHILE STATE(10) < 95 DO
+		WAIT
+
+	    END
+	    SIGNAL -3001
+
+	    DEPART 50
+
+
+
+
+
+
+	END
+
+.END
+
+.PROGRAM vgis2()
+	SPEED 100
+	SPEED 100 MONITOR
+	ACCEL 100, 100
+
+	WHILE TRUE DO
+	    MOVE TRANS(324.053,239.307,327.033,0,180,8.368)
+	    WHILE STATE(10) < 90 DO
+		WAIT
+
+	    END
+
+	    MOVE TRANS(324.053,239.307,201.56,0,180,8.368)
+	    WHILE STATE(10) < 90 DO
+		WAIT
+
+	    END
+	    SIGNAL 3001
+	    DEPART 100
+
+
+	    MOVE TRANS(387.803,-80.162,327.033,0,180,8.375)
+	    WHILE STATE(10) < 90 DO
+		WAIT
+
+	    END
+	    MOVE TRANS(387.803,-80.162,209.779,0,180,8.375)
+
+	    WHILE STATE(10) < 90 DO
+		WAIT
+
+	    END
+	    SIGNAL -3001
+	    DEPART 100
+
+	END
+
+.END
+
+.LOCATIONS
+.END
+
+.REALS
+.END
+
+.DOUBLES
+.END
+
+.STRINGS
+.END
+
+
